@@ -5,9 +5,8 @@ import javax.validation.constraints.*;
 
 
 @Entity
-@Table(name = "Person_dao")
-public class Person_dao {
-
+@Table(name = "person_less_58")
+public class Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +21,11 @@ public class Person_dao {
     @Column(name = "age")
     private int age;
 
-    public Person_dao() {}
+    public Person() {
 
-    public Person_dao(String name, int age) {
+    }
+
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -53,4 +54,12 @@ public class Person_dao {
         this.age = age;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

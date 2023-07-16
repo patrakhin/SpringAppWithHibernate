@@ -17,12 +17,10 @@ import javax.validation.Valid;
 public class PeopleController {
 
     private final PersonDAO personDAO;
-    private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, PersonValidator personValidator) {
+    public PeopleController(PersonDAO personDAO) {
         this.personDAO = personDAO;
-        this.personValidator = personValidator;
     }
 
     @GetMapping()
@@ -45,7 +43,6 @@ public class PeopleController {
     @PostMapping()
     public String create(@ModelAttribute("person") @Valid Person person,
                          BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors())
             return "people/new";
 
@@ -62,7 +59,6 @@ public class PeopleController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
                          @PathVariable("id") int id) {
-        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors())
             return "people/edit";
 
