@@ -1,11 +1,11 @@
 package ru.patrakhin.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.patrakhin.models.Person;
+import org.springframework.transaction.annotation.Transactional;
+import ru.patrakhin.models.Person_dao;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,38 +16,36 @@ import java.util.Optional;
 @Component
 public class PersonDAO {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public PersonDAO(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public PersonDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public List<Person> index() {
-        return jdbcTemplate.query("SELECT * FROM Person", new BeanPropertyRowMapper<>(Person.class));
+    @Transactional
+    public List<Person_dao> index() {
+        Session session = sessionFactory.getCurrentSession();
+        return null;
     }
 
-    public Optional<Person> show(String email){
-        return jdbcTemplate.query("SELECT * FROM Person WHERE email = ?", new Object[]{email},
-                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    public Optional<Person_dao> show(String email){
+        return null;
     }
 
-    public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
-                .stream().findAny().orElse(null);
+    public Person_dao show(int id) {
+        return null;
     }
 
-    public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO Person(name, age, email, address) VALUES(?, ?, ?, ?)", person.getName(), person.getAge(),
-                person.getEmail(), person.getAddress());
+    public void save(Person_dao person) {
+
     }
 
-    public void update(int id, Person updatedPerson) {
-        jdbcTemplate.update("UPDATE Person SET name=?, age=?, email=?, address=? WHERE id=?", updatedPerson.getName(),
-                updatedPerson.getAge(), updatedPerson.getEmail(), updatedPerson.getAddress(), id);
+    public void update(int id, Person_dao updatedPerson) {
+
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM Person WHERE id=?", id);
+
     }
 }
